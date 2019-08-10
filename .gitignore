@@ -1,0 +1,45 @@
+HELP.md
+target/
+!**/src/main/**
+!**/src/test/**
+
+### Maven Wrapper ###
+#.mvn
+#!.mvn/wrapper/maven-wrapper.jar
+
+### Gradle Wrapper ###
+.gradle
+#!gradle/wrapper/gradle-wrapper.jar
+out/
+
+### Recursively ignore all *.iml files ###
+**/*.iml
+
+### NetBeans ###
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### VS Code ###
+.vscode/
+
+### OSX ###
+.DS_Store
