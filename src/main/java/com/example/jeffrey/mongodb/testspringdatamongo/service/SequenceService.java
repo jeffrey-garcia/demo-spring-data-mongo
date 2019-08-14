@@ -2,6 +2,8 @@ package com.example.jeffrey.mongodb.testspringdatamongo.service;
 
 import com.example.jeffrey.mongodb.testspringdatamongo.model.Sequence;
 import com.example.jeffrey.mongodb.testspringdatamongo.repository.SequenceRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.FindAndModifyOptions;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -10,8 +12,11 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class SequenceService {
+    private static final Logger LOGGER = LoggerFactory.getLogger(SequenceService.class);
 
     @Autowired
     SequenceRepository sequenceRepository;
@@ -30,6 +35,10 @@ public class SequenceService {
                 new FindAndModifyOptions().returnNew(true),
                 Sequence.class);
         return sequence.sequenceNumber;
+    }
+
+    public List<Sequence> querySequenceNumber() {
+        return sequenceRepository.findAll();
     }
 
 }

@@ -1,8 +1,6 @@
 package com.example.jeffrey.mongodb.testspringdatamongo;
 
-import com.example.jeffrey.mongodb.testspringdatamongo.model.Sequence;
 import com.example.jeffrey.mongodb.testspringdatamongo.repository.CustomerRepository;
-import com.example.jeffrey.mongodb.testspringdatamongo.repository.SequenceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -18,13 +16,8 @@ public class TestSpringDataMongoApplication implements CommandLineRunner {
 	@Autowired
 	CustomerRepository customerRepository;
 
-	@Autowired
-	SequenceRepository sequenceRepository;
-
 	@Override
 	public void run(String... args) throws Exception {
 		customerRepository.deleteAll();
-		sequenceRepository.deleteAll();
-		sequenceRepository.save(new Sequence());
 	}
 }

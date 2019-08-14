@@ -1,10 +1,13 @@
 package com.example.jeffrey.mongodb.testspringdatamongo.controller;
 
 import com.example.jeffrey.mongodb.testspringdatamongo.model.Customer;
+import com.example.jeffrey.mongodb.testspringdatamongo.model.Sequence;
 import com.example.jeffrey.mongodb.testspringdatamongo.service.CustomerService;
 import com.example.jeffrey.mongodb.testspringdatamongo.service.SequenceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class MainController {
@@ -44,6 +47,11 @@ public class MainController {
     @GetMapping(path="/sequence/append")
     public @ResponseBody int appendSequenceNumber() {
         return sequenceService.appendSequenceNumber();
+    }
+
+    @GetMapping(path="/sequence/query")
+    public @ResponseBody List<Sequence> querySequenceNumber() {
+        return sequenceService.querySequenceNumber();
     }
 
 }
