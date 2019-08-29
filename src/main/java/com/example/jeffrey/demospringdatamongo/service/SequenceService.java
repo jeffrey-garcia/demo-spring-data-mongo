@@ -1,7 +1,7 @@
-package com.example.jeffrey.mongodb.testspringdatamongo.service;
+package com.example.jeffrey.demospringdatamongo.service;
 
-import com.example.jeffrey.mongodb.testspringdatamongo.model.Sequence;
-import com.example.jeffrey.mongodb.testspringdatamongo.repository.SequenceRepository;
+import com.example.jeffrey.demospringdatamongo.model.Sequence;
+import com.example.jeffrey.demospringdatamongo.repository.SequenceRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

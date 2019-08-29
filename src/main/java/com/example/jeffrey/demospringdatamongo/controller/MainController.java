@@ -1,9 +1,9 @@
-package com.example.jeffrey.mongodb.testspringdatamongo.controller;
+package com.example.jeffrey.demospringdatamongo.controller;
 
-import com.example.jeffrey.mongodb.testspringdatamongo.model.Customer;
-import com.example.jeffrey.mongodb.testspringdatamongo.model.Sequence;
-import com.example.jeffrey.mongodb.testspringdatamongo.service.CustomerService;
-import com.example.jeffrey.mongodb.testspringdatamongo.service.SequenceService;
+import com.example.jeffrey.demospringdatamongo.model.Customer;
+import com.example.jeffrey.demospringdatamongo.service.CustomerService;
+import com.example.jeffrey.demospringdatamongo.service.SequenceService;
+import com.example.jeffrey.demospringdatamongo.model.Sequence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,7 +25,8 @@ public class MainController {
     }
 
     @GetMapping(path="/customer/add")
-    public @ResponseBody Customer add(@RequestParam String firstName, @RequestParam String lastName) {
+    public @ResponseBody
+    Customer add(@RequestParam String firstName, @RequestParam String lastName) {
         Customer customer = new Customer(firstName, lastName);
         customerService.save(customer); // save to DB
         return customer;

@@ -1,7 +1,7 @@
-package com.example.jeffrey.mongodb.testspringdatamongo.service;
+package com.example.jeffrey.demospringdatamongo.service;
 
-import com.example.jeffrey.mongodb.testspringdatamongo.model.Sequence;
-import com.example.jeffrey.mongodb.testspringdatamongo.repository.SequenceRepository;
+import com.example.jeffrey.demospringdatamongo.model.Sequence;
+import com.example.jeffrey.demospringdatamongo.repository.SequenceRepository;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -41,11 +41,11 @@ public class SequenceServiceIT {
         sequenceRepository.save(new Sequence());
     }
 
-//    @Test
-//    public void initialTest() {
-//        int sequenceNumber = sequenceService.appendSequenceNumber();
-//        Assert.assertEquals(1, sequenceNumber);
-//    }
+    @Test
+    public void initialTest() {
+        int sequenceNumber = sequenceService.appendSequenceNumber();
+        Assert.assertEquals(1, sequenceNumber);
+    }
 
     @Test
     public void loopTest() throws Exception {

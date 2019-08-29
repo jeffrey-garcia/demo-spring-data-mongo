@@ -1,4 +1,4 @@
-package com.example.jeffrey.mongodb.testspringdatamongo;
+package com.example.jeffrey.demospringdatamongo;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,7 +7,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class TestSpringDataMongoApplicationTests {
+public class DemoSpringDataMongoApplicationIT {
 
 	@Test
 	public void contextLoads() {

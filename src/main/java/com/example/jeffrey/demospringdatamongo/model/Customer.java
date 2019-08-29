@@ -1,4 +1,4 @@
-package com.example.jeffrey.mongodb.testspringdatamongo.model;
+package com.example.jeffrey.demospringdatamongo.model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

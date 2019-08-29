@@ -9,12 +9,12 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
-	<groupId>com.example.jeffrey.mongodb</groupId>
-	<artifactId>test-spring-data-mongo</artifactId>
+	<groupId>com.example.jeffrey</groupId>
+	<artifactId>demo-spring-data-mongo</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
-	<name>test-spring-data-mongo</name>
-	<description>Demo project for Spring Boot</description>
+	<name>demo-spring-data-mongo</name>
+	<description>Demo project demonstrating mongo db access via spring data mongodb</description>
 
 	<properties>
 		<java.version>1.8</java.version>
@@ -42,12 +42,12 @@
 			<scope>test</scope>
 		</dependency>
 
-		<!-- mongodb testing -->
-		<!--<dependency>-->
-			<!--<groupId>de.flapdoodle.embed</groupId>-->
-			<!--<artifactId>de.flapdoodle.embed.mongo</artifactId>-->
-			<!--<scope>test</scope>-->
-		<!--</dependency>-->
+		 <!--mongodb testing -->
+		<dependency>
+			<groupId>de.flapdoodle.embed</groupId>
+			<artifactId>de.flapdoodle.embed.mongo</artifactId>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>

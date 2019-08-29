@@ -1,6 +1,6 @@
-package com.example.jeffrey.mongodb.testspringdatamongo.repository;
+package com.example.jeffrey.demospringdatamongo.repository;
 
-import com.example.jeffrey.mongodb.testspringdatamongo.model.Customer;
+import com.example.jeffrey.demospringdatamongo.model.Customer;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
