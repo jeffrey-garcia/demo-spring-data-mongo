@@ -11,3 +11,10 @@ and uses embedded database for local testing and debugging.
 ```sh
 ./mvnw verify
 ```
+
+### Startup Mongo
+```sh
+sudo mongod
+```
+
+### References:
