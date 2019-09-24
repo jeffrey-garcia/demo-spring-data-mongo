@@ -49,8 +49,11 @@ public class Customer {
         LOGGER.debug("created on: {}", rfc3339);
 
         // LocalDateTime will be using the date/time value in Thailand's timezone, but the timezone information
-        // is no longer preserved, so later on when MongoDB driver convert it using system timezone there will be
-        // precision loss
+        // is no longer preserved, so later on when MongoDB driver proceed conversion, it will be converted as
+        // local system date/time, thus causing precision loss.
+        //
+        // For example:
+        // 2019-01-01T07:00:00+07:00 will be converted to 2018-12:31 23:00:00 UTC
         LocalDateTime localDateTime = LocalDateTime.ofInstant(
                 ZonedDateTime.parse(rfc3339, dateTimeFormatter).toInstant(),
                 ZoneId.of("Asia/Bangkok")
@@ -69,9 +72,9 @@ public class Customer {
         String rfc3339 = dateTimeFormatter.format(zonedDateTime_Tha);
         LOGGER.debug("created on: {}", rfc3339);
 
-        // LocalDateTime will be using the date/time value in Thailand's timezone, but the timezone information
-        // is no longer preserved, so later on when MongoDB driver convert it using system timezone there will be
-        // precision loss
+        // LocalDateTime will be using the date/time value in local system timezone, so later on
+        // when MongoDB driver proceed conversion using local system timezone there will NOT be
+        // any precision loss
         LocalDateTime localDateTime = LocalDateTime.ofInstant(
                 ZonedDateTime.parse(rfc3339, dateTimeFormatter).toInstant(),
                 ZoneId.systemDefault()
