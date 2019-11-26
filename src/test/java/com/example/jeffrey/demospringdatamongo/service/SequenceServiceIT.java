@@ -79,7 +79,6 @@ public class SequenceServiceIT {
         }
 
         lock.await();
-
         findDuplicates(sequenceNumbers);
     }
 
@@ -94,6 +93,9 @@ public class SequenceServiceIT {
         }
 
         Assert.assertEquals(input.length, set.size());
+
+        // this test will always fail, database write have delay
+//        Assert.assertEquals(input[input.length-1], sequenceService.querySequenceNumber().get(0).sequenceNumber);
     }
 
 }

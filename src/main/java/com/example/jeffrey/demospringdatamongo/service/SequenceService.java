@@ -32,7 +32,7 @@ public class SequenceService {
         Sequence sequence = mongoTemplate.findAndModify(
                 query,
                 update,
-                new FindAndModifyOptions().returnNew(true),
+                new FindAndModifyOptions().returnNew(true).upsert(true),
                 Sequence.class);
         return sequence.sequenceNumber;
     }
