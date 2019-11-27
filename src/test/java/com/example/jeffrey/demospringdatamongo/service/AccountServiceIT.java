@@ -35,21 +35,189 @@ public class AccountServiceIT {
     @Autowired
     AccountService accountService;
 
+    String accountNumberToDebit;
+    String accountNumberToCredit;
+    long transferAmount = 10L;
+
     @Before
     public void setUp() {
         accountRepository.deleteAll();
         accountRepository.save(new Account());
         accountRepository.save(new Account());
+
+        List<Account> accounts = accountRepository.findAll();
+        accountNumberToDebit = accounts.get(0).accountNumber;
+        accountNumberToCredit = accounts.get(1).accountNumber;
+    }
+
+// TEST 1
+
+    @Test
+    public void test_executeTransfer_withTransactionTemplate_runOneTransfer() {
+        runOneTransfer(() -> {
+            accountService.executeTransfer(transferAmount, accountNumberToDebit, accountNumberToCredit);
+        });
+    }
+
+    @Test(expected = AssertionError.class)
+    public void test_executeTransfer_withTransactionTemplate_runMultipleTransfer() {
+        runMultipleTransfer(() -> {
+            accountService.executeTransfer(transferAmount, accountNumberToDebit, accountNumberToCredit);
+        });
+    }
+
+    @Test(expected = AssertionError.class)
+    public void test_executeTransfer_withTransactionTemplate_runMultipleTransferConcurrently() {
+        runMultipleTransferConcurrently(() -> {
+            accountService.executeTransfer(transferAmount, accountNumberToDebit, accountNumberToCredit);
+        });
+    }
+
+// TEST 2
+
+    @Test
+    public void test_executeTransferTx_withMongoRepository_runOneTransfer() {
+        runOneTransfer(() -> {
+            accountService.executeTransferTx_withMongoRepository(transferAmount, accountNumberToDebit, accountNumberToCredit);
+        });
     }
 
     @Test
-    public void test() {
+    public void test_executeTransferTx_withMongoRepository_runMultipleTransfer() {
+        runMultipleTransfer(() -> {
+            accountService.executeTransferTx_withMongoRepository(transferAmount, accountNumberToDebit, accountNumberToCredit);
+        });
+    }
+
+    @Test(expected = AssertionError.class)
+    public void test_executeTransferTx_withMongoRepository_runMultipleTransferConcurrently() {
+        runMultipleTransferConcurrently(() -> {
+            accountService.executeTransferTx_withMongoRepository(transferAmount, accountNumberToDebit, accountNumberToCredit);
+        });
+    }
+
+// TEST 3
+
+    @Test
+    public void test_executeTransferTx_withMongoTemplate_runOneTransfer() {
+        runOneTransfer(() -> {
+            accountService.executeTransferTx_withMongoTemplate(transferAmount, accountNumberToDebit, accountNumberToCredit);
+        });
+    }
+
+    @Test
+    public void test_executeTransferTx_withMongoTemplate_runMultipleTransfer() {
+        runMultipleTransfer(() -> {
+            accountService.executeTransferTx_withMongoTemplate(transferAmount, accountNumberToDebit, accountNumberToCredit);
+        });
+    }
+
+    @Test(expected = AssertionError.class)
+    public void test_executeTransferTx_withMongoTemplate_runMultipleTransferConcurrently() {
+        runMultipleTransferConcurrently(() -> {
+            accountService.executeTransferTx_withMongoTemplate(transferAmount, accountNumberToDebit, accountNumberToCredit);
+        });
+    }
+
+// TEST 4
+
+    @Test
+    public void test_executeTransferTx_withMongoTemplate_atomicReadWrite_runOneTransfer() {
+        runOneTransfer(() -> {
+            accountService.executeTransferTx_withMongoTemplate_atomicReadWrite(transferAmount, accountNumberToDebit, accountNumberToCredit);
+        });
+    }
+
+    @Test
+    public void test_executeTransferTx_withMongoTemplate_atomicReadWrite_runMultipleTransfer() {
+        runMultipleTransfer(() -> {
+            accountService.executeTransferTx_withMongoTemplate_atomicReadWrite(transferAmount, accountNumberToDebit, accountNumberToCredit);
+        });
+    }
+
+    @Test(expected = AssertionError.class)
+    public void test_executeTransferTx_withMongoTemplate_atomicReadWrite_runMultipleTransferConcurrently() {
+        runMultipleTransferConcurrently(() -> {
+            accountService.executeTransferTx_withMongoTemplate_atomicReadWrite(transferAmount, accountNumberToDebit, accountNumberToCredit);
+        });
+    }
+
+// TEST 5
+
+    @Test
+    public void test_executeTransferTx_withTransactionTemplate_runOneTransfer() {
+        runOneTransfer(() -> {
+            accountService.executeTransferTx_withTransactionTemplate(transferAmount, accountNumberToDebit, accountNumberToCredit);
+        });
+    }
+
+    @Test
+    public void test_executeTransferTx_withTransactionTemplate_runMultipleTransfer() {
+        runMultipleTransfer(() -> {
+            accountService.executeTransferTx_withTransactionTemplate(transferAmount, accountNumberToDebit, accountNumberToCredit);
+        });
+    }
+
+    @Test
+    public void test_executeTransferTx_withTransactionTemplate_runMultipleTransferConcurrently() {
+        runMultipleTransferConcurrently(() -> {
+            accountService.executeTransferTx_withTransactionTemplate(transferAmount, accountNumberToDebit, accountNumberToCredit);
+        });
+    }
+
+// TEST 6
+
+    @Test
+    public void test_executeTransferTx_withSession_AutoRetry_runOneTransfer() {
+        runOneTransfer(() -> {
+            accountService.executeTransferTx_withSession_AutoRetry(transferAmount, accountNumberToDebit, accountNumberToCredit);
+        });
+    }
+
+    @Test
+    public void test_executeTransferTx_withSession_AutoRetry_runMultipleTransfer() {
+        runMultipleTransfer(() -> {
+            accountService.executeTransferTx_withSession_AutoRetry(transferAmount, accountNumberToDebit, accountNumberToCredit);
+        });
+    }
+
+    @Test
+    public void test_executeTransferTx_withSession_AutoRetry_runMultipleTransferConcurrently() {
+        runMultipleTransferConcurrently(() -> {
+            accountService.executeTransferTx_withSession_AutoRetry(transferAmount, accountNumberToDebit, accountNumberToCredit);
+        });
+    }
+
+// TEST 7
+
+    @Test
+    public void test_executeTransferTx_withSession_ManualRetry_runOneTransfer() {
+        runOneTransfer(() -> {
+            accountService.executeTransferTx_withSession_ManualRetry(transferAmount, accountNumberToDebit, accountNumberToCredit);
+        });
+    }
+
+    @Test
+    public void test_executeTransferTx_withSession_ManualRetry_runMultipleTransfer() {
+        runMultipleTransfer(() -> {
+            accountService.executeTransferTx_withSession_ManualRetry(transferAmount, accountNumberToDebit, accountNumberToCredit);
+        });
+    }
+
+    @Test
+    public void test_executeTransferTx_withSession_ManualRetry_runMultipleTransferConcurrently() {
+        runMultipleTransferConcurrently(() -> {
+            accountService.executeTransferTx_withSession_ManualRetry(transferAmount, accountNumberToDebit, accountNumberToCredit);
+        });
+    }
+
+    protected void runOneTransfer(TransferCommand command) {
         List<Account> accounts = accountRepository.findAll();
         String accountNumberToDebit = accounts.get(0).accountNumber;
         String accountNumberToCredit = accounts.get(1).accountNumber;
 
         try {
-            accountService.executeTransferTx_withTransactionTemplate(10L, accountNumberToDebit, accountNumberToCredit);
+            command.execute();
         } catch (RuntimeException e) {}
 
         Assert.assertEquals(
@@ -60,8 +228,7 @@ public class AccountServiceIT {
                 accountRepository.findByAccountNumber(accountNumberToCredit).accountBalance.longValue());
     }
 
-    @Test
-    public void loopTest() throws Exception {
+    protected void runMultipleTransfer(TransferCommand command) throws AssertionError {
         List<Account> accounts = accountRepository.findAll();
         String accountNumberToDebit = accounts.get(0).accountNumber;
         String accountNumberToCredit = accounts.get(1).accountNumber;
@@ -70,7 +237,7 @@ public class AccountServiceIT {
 
         for (int i=0; i<MAX; i++) {
             try {
-                accountService.executeTransferTx_withTransactionTemplate(10L, accountNumberToDebit, accountNumberToCredit);
+                command.execute();
             } catch (RuntimeException e) {
                 LOGGER.error("error during debit: {}", e.getMessage());
             } catch (Throwable t) {}
@@ -84,8 +251,7 @@ public class AccountServiceIT {
                 accountRepository.findByAccountNumber(accountNumberToCredit).accountBalance.longValue());
     }
 
-    @Test
-    public void concurrentLoopTest() throws Exception {
+    protected void runMultipleTransferConcurrently(TransferCommand command) throws AssertionError {
         List<Account> accounts = accountRepository.findAll();
         String accountNumberToDebit = accounts.get(0).accountNumber;
         String accountNumberToCredit = accounts.get(1).accountNumber;
@@ -97,7 +263,7 @@ public class AccountServiceIT {
         for (int i=0; i<MAX_THREAD; i++) {
             executor.execute(() -> {
                 try {
-                    accountService.executeTransferTx_withTransactionTemplate(10L, accountNumberToDebit, accountNumberToCredit);
+                    command.execute();
                 } catch (RuntimeException e) {
                     LOGGER.error("error during debit: {}", e.getMessage());
                 }
@@ -105,7 +271,9 @@ public class AccountServiceIT {
             });
         }
 
-        lock.await();
+        try {
+            lock.await();
+        } catch (InterruptedException e) { }
 
         Assert.assertEquals(
                 Long.valueOf(70L).longValue(),
@@ -114,4 +282,9 @@ public class AccountServiceIT {
                 Long.valueOf(130L).longValue(),
                 accountRepository.findByAccountNumber(accountNumberToCredit).accountBalance.longValue());
     }
+}
+
+@FunctionalInterface
+interface TransferCommand {
+    void execute() throws RuntimeException;
 }
