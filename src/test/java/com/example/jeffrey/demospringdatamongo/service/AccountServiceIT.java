@@ -43,7 +43,49 @@ public class AccountServiceIT {
     }
 
     @Test
+    public void test() {
+        List<Account> accounts = accountRepository.findAll();
+        String accountNumberToDebit = accounts.get(0).accountNumber;
+        String accountNumberToCredit = accounts.get(1).accountNumber;
+
+        try {
+            accountService.executeTransferTx_withTransactionTemplate(10L, accountNumberToDebit, accountNumberToCredit);
+        } catch (RuntimeException e) {}
+
+        Assert.assertEquals(
+                Long.valueOf(90L).longValue(),
+                accountRepository.findByAccountNumber(accountNumberToDebit).accountBalance.longValue());
+        Assert.assertEquals(
+                Long.valueOf(110L).longValue(),
+                accountRepository.findByAccountNumber(accountNumberToCredit).accountBalance.longValue());
+    }
+
+    @Test
     public void loopTest() throws Exception {
+        List<Account> accounts = accountRepository.findAll();
+        String accountNumberToDebit = accounts.get(0).accountNumber;
+        String accountNumberToCredit = accounts.get(1).accountNumber;
+
+        final int MAX = 4;
+
+        for (int i=0; i<MAX; i++) {
+            try {
+                accountService.executeTransferTx_withTransactionTemplate(10L, accountNumberToDebit, accountNumberToCredit);
+            } catch (RuntimeException e) {
+                LOGGER.error("error during debit: {}", e.getMessage());
+            } catch (Throwable t) {}
+        }
+
+        Assert.assertEquals(
+                Long.valueOf(70L).longValue(),
+                accountRepository.findByAccountNumber(accountNumberToDebit).accountBalance.longValue());
+        Assert.assertEquals(
+                Long.valueOf(130L).longValue(),
+                accountRepository.findByAccountNumber(accountNumberToCredit).accountBalance.longValue());
+    }
+
+    @Test
+    public void concurrentLoopTest() throws Exception {
         List<Account> accounts = accountRepository.findAll();
         String accountNumberToDebit = accounts.get(0).accountNumber;
         String accountNumberToCredit = accounts.get(1).accountNumber;
@@ -55,8 +97,7 @@ public class AccountServiceIT {
         for (int i=0; i<MAX_THREAD; i++) {
             executor.execute(() -> {
                 try {
-//                accountService.debit(10L, accountNumberToDebit, accountNumberToCredit);
-                    accountService.debitTx(10L, accountNumberToDebit, accountNumberToCredit);
+                    accountService.executeTransferTx_withTransactionTemplate(10L, accountNumberToDebit, accountNumberToCredit);
                 } catch (RuntimeException e) {
                     LOGGER.error("error during debit: {}", e.getMessage());
                 }
@@ -67,36 +108,10 @@ public class AccountServiceIT {
         lock.await();
 
         Assert.assertEquals(
-                Long.valueOf(60L).longValue(),
+                Long.valueOf(70L).longValue(),
                 accountRepository.findByAccountNumber(accountNumberToDebit).accountBalance.longValue());
-//        Assert.assertEquals(
-//                Long.valueOf(140L).longValue(),
-//                accountRepository.findByAccountNumber(accountNumberToCredit).accountBalance.longValue());
-    }
-
-    @Test
-    public void loopTest2() throws Exception {
-        List<Account> accounts = accountRepository.findAll();
-        String accountNumberToDebit = accounts.get(0).accountNumber;
-        String accountNumberToCredit = accounts.get(1).accountNumber;
-
-        final int MAX = 4;
-
-        for (int i=0; i<MAX; i++) {
-            try {
-//                accountService.debit(10L, accountNumberToDebit, accountNumberToCredit);
-                accountService.debitTx(10L, accountNumberToDebit, accountNumberToCredit);
-            } catch (RuntimeException e) {
-                LOGGER.error("error during debit: {}", e.getMessage());
-            } catch (Throwable t) {}
-        }
-
         Assert.assertEquals(
-                Long.valueOf(60L).longValue(),
-                accountRepository.findByAccountNumber(accountNumberToDebit).accountBalance.longValue());
-//        Assert.assertEquals(
-//                Long.valueOf(140L).longValue(),
-//                accountRepository.findByAccountNumber(accountNumberToCredit).accountBalance.longValue());
+                Long.valueOf(130L).longValue(),
+                accountRepository.findByAccountNumber(accountNumberToCredit).accountBalance.longValue());
     }
-
 }
