@@ -25,23 +25,33 @@ your data appropriately will minimize the need for multi-document transactions.
 
 <br/>
 
-### Startup MongoDB with local replica
-To get started, we have to download the latest version from the MongoDB Download Center.
+### Setup MongoDB
 
-##### start mongod service using the command line:
+##### Install MongoDB (Mac OSX)
 ```sh
-sudo mongod --replSet replocal
+brew install mongodb
 ```
 
-##### initiate replica set
+##### Startup MongoDB (Mac OSX)
 ```sh
-mongo --eval "rs.initiate()"
+sudo mongod
 ```
+
+##### Setup local replica
+Follow this link for the steps to setup local replica
+- [Setup MongoDB local replica](https://gist.github.com/davisford/bb37079900888c44d2bbcb2c52a5d6e8)
+
+##### Startup MongoDB with local replica
+```sh
+sudo mongod --replSet {replica_name}
+```
+`{replica_name}` is the name of the configured local replica
 
 ##### connection string in spring application.properties
 ```sh
-spring.data.mongodb.uri=mongodb://127.0.0.1:27017/test?replicaSet=replocal
+spring.data.mongodb.uri=mongodb://127.0.0.1:27017/test?replicaSet={replica_name}
 ```
+`{replica_name}` is the name of the configured local replica
 <br/>
 
 ### Build, Run and Test
