@@ -3,6 +3,7 @@ package com.example.jeffrey.demospringdatamongo.model;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.UUID;
@@ -15,6 +16,7 @@ public class Account {
     @Id
     public String id;
 
+    @Indexed(unique = true)
     public String accountNumber;
 
     public Long accountBalance;
