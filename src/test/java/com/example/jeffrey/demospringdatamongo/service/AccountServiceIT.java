@@ -1,6 +1,6 @@
 package com.example.jeffrey.demospringdatamongo.service;
 
-import com.example.jeffrey.demospringdatamongo.config.DemoDbConfig;
+import com.example.jeffrey.demospringdatamongo.config.DemoMongoDbConfig;
 import com.example.jeffrey.demospringdatamongo.model.Account;
 import com.example.jeffrey.demospringdatamongo.repository.AccountRepository;
 import org.junit.Assert;
@@ -23,7 +23,7 @@ import java.util.concurrent.Executors;
 
 @RunWith(SpringRunner.class)
 @DataMongoTest
-@Import({DemoDbConfig.class, AccountService.class})
+@Import({DemoMongoDbConfig.class, AccountService.class})
 @ActiveProfiles("test")
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class AccountServiceIT {
@@ -53,21 +53,21 @@ public class AccountServiceIT {
 // TEST 1
 
     @Test
-    public void test_executeTransfer_withTransactionTemplate_runOneTransfer() {
+    public void test_executeTransfer_withMongoTemplate_runOneTransfer() {
         runOneTransfer(() -> {
             accountService.executeTransfer(transferAmount, accountNumberToDebit, accountNumberToCredit);
         });
     }
 
     @Test(expected = AssertionError.class)
-    public void test_executeTransfer_withTransactionTemplate_runMultipleTransfer() {
+    public void test_executeTransfer_withMongoTemplate_runMultipleTransfer() {
         runMultipleTransfer(() -> {
             accountService.executeTransfer(transferAmount, accountNumberToDebit, accountNumberToCredit);
         });
     }
 
     @Test(expected = AssertionError.class)
-    public void test_executeTransfer_withTransactionTemplate_runMultipleTransferConcurrently() {
+    public void test_executeTransfer_withMongoTemplate_runMultipleTransferConcurrently() {
         runMultipleTransferConcurrently(() -> {
             accountService.executeTransfer(transferAmount, accountNumberToDebit, accountNumberToCredit);
         });

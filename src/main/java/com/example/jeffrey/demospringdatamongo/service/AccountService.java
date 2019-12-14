@@ -1,6 +1,6 @@
 package com.example.jeffrey.demospringdatamongo.service;
 
-import com.example.jeffrey.demospringdatamongo.config.DemoDbConfig;
+import com.example.jeffrey.demospringdatamongo.config.DemoMongoDbConfig;
 import com.example.jeffrey.demospringdatamongo.model.Account;
 import com.example.jeffrey.demospringdatamongo.repository.AccountRepository;
 import com.mongodb.MongoException;
@@ -32,7 +32,7 @@ public class AccountService {
     private static final Logger LOGGER = LoggerFactory.getLogger(AccountService.class);
 
     @Autowired
-    DemoDbConfig dbConfig;
+    DemoMongoDbConfig dbConfig;
 
     @Autowired
     MongoTemplate mongoTemplate;
