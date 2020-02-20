@@ -25,6 +25,17 @@ your data appropriately will minimize the need for multi-document transactions.
 
 <br/>
 
+### System Requirement:
+- MongoDB v4.0 or higher, which supports multi-document transactions on `replica sets`.
+- MongoDB Java Driver v3.11 or higher, with improved transaction support:
+    - The sessions API supports the ClientSession.withTransaction() method to conveniently run 
+    a transaction with 
+automatic retries and at-most-once semantics
+- Spring-boot-starter-data-mongodb v2.2.0 or higher
+    - Support for Hashed Indexes, facilitates hash based sharding within a sharded cluster. 
+    Using hashed field values to shard collections results in a more random distribution of 
+    data resided in the event store collection.
+
 ### Setup MongoDB
 
 ##### Install MongoDB (Mac OSX)
