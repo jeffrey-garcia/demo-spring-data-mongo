@@ -220,12 +220,15 @@ public class AccountServiceIT {
             command.execute();
         } catch (RuntimeException e) {}
 
+        long debitAccountBalance = accountRepository.findByAccountNumber(accountNumberToDebit).accountBalance;
+        long creditAccountBalance = accountRepository.findByAccountNumber(accountNumberToCredit).accountBalance;
+
         Assert.assertEquals(
                 Long.valueOf(90L).longValue(),
-                accountRepository.findByAccountNumber(accountNumberToDebit).accountBalance.longValue());
+                debitAccountBalance);
         Assert.assertEquals(
                 Long.valueOf(110L).longValue(),
-                accountRepository.findByAccountNumber(accountNumberToCredit).accountBalance.longValue());
+                creditAccountBalance);
     }
 
     protected void runMultipleTransfer(TransferCommand command) throws AssertionError {
@@ -243,12 +246,15 @@ public class AccountServiceIT {
             } catch (Throwable t) {}
         }
 
+        long debitAccountBalance = accountRepository.findByAccountNumber(accountNumberToDebit).accountBalance;
+        long creditAccountBalance = accountRepository.findByAccountNumber(accountNumberToCredit).accountBalance;
+
         Assert.assertEquals(
                 Long.valueOf(70L).longValue(),
-                accountRepository.findByAccountNumber(accountNumberToDebit).accountBalance.longValue());
+                debitAccountBalance);
         Assert.assertEquals(
                 Long.valueOf(130L).longValue(),
-                accountRepository.findByAccountNumber(accountNumberToCredit).accountBalance.longValue());
+                creditAccountBalance);
     }
 
     protected void runMultipleTransferConcurrently(TransferCommand command) throws AssertionError {
@@ -275,12 +281,15 @@ public class AccountServiceIT {
             lock.await();
         } catch (InterruptedException e) { }
 
+        long debitAccountBalance = accountRepository.findByAccountNumber(accountNumberToDebit).accountBalance;
+        long creditAccountBalance = accountRepository.findByAccountNumber(accountNumberToCredit).accountBalance;
+
         Assert.assertEquals(
                 Long.valueOf(70L).longValue(),
-                accountRepository.findByAccountNumber(accountNumberToDebit).accountBalance.longValue());
+                debitAccountBalance);
         Assert.assertEquals(
                 Long.valueOf(130L).longValue(),
-                accountRepository.findByAccountNumber(accountNumberToCredit).accountBalance.longValue());
+                creditAccountBalance);
     }
 }
 
