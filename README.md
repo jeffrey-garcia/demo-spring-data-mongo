@@ -75,6 +75,10 @@ spring.data.mongodb.uri=mongodb://127.0.0.1:27017/test?replicaSet={replica_name}
 ```sh
 ./mvnw verify
 ```
+
+##### Execute the integration test with an Embedded MongoDB based on mongod v4.0
+- Read [HERE](https://github.com/flapdoodle-oss/de.flapdoodle.embed.mongo/issues/257)
+
 <br/>
 
 ### References:

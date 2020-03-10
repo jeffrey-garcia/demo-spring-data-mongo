@@ -2,19 +2,21 @@ package com.example.jeffrey.demospringdatamongo.service;
 
 import com.example.jeffrey.demospringdatamongo.model.Sequence;
 import com.example.jeffrey.demospringdatamongo.repository.SequenceRepository;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import com.example.jeffrey.demospringdatamongo.util.EmbeddedMongoDb;
+import org.junit.*;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.io.IOException;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.concurrent.CountDownLatch;
@@ -26,8 +28,24 @@ import java.util.concurrent.Executors;
 @Import({SequenceService.class})
 @ActiveProfiles("test")
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@TestPropertySource(locations = "/application.properties")
 public class SequenceServiceIT {
     private static final Logger LOGGER = LoggerFactory.getLogger(SequenceServiceIT.class);
+
+    @Value("${spring.data.mongodb.uri:#{null}}")
+    protected static String mongoDbConnectionString;
+
+    @BeforeClass
+    public static void setUp() throws IOException {
+        EmbeddedMongoDb.replicaSetConfigurer().start(
+                mongoDbConnectionString == null ? EmbeddedMongoDb.DEFAULT_CONN_STR : mongoDbConnectionString
+        );
+    }
+
+    @AfterClass
+    public static void cleanUp() {
+        EmbeddedMongoDb.replicaSetConfigurer().finish();
+    }
 
     @Autowired
     SequenceRepository sequenceRepository;
@@ -36,7 +54,7 @@ public class SequenceServiceIT {
     SequenceService sequenceService;
 
     @Before
-    public void setUp() {
+    public void initialize() {
         sequenceRepository.deleteAll();
         sequenceRepository.save(new Sequence());
     }
