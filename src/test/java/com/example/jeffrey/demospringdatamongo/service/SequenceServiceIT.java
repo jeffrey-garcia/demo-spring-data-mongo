@@ -42,11 +42,6 @@ public class SequenceServiceIT {
         );
     }
 
-    @AfterClass
-    public static void cleanUp() {
-        EmbeddedMongoDb.replicaSetConfigurer().finish();
-    }
-
     @Autowired
     SequenceRepository sequenceRepository;
 

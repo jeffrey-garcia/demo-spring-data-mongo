@@ -42,11 +42,6 @@ public class AccountServiceIT {
         );
     }
 
-    @AfterClass
-    public static void cleanUp() {
-        EmbeddedMongoDb.replicaSetConfigurer().finish();
-    }
-
     @Autowired
     AccountRepository accountRepository;
 

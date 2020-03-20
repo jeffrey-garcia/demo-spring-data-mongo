@@ -35,11 +35,6 @@ public class CustomerServiceIT {
         );
     }
 
-    @AfterClass
-    public static void cleanUp() {
-        EmbeddedMongoDb.replicaSetConfigurer().finish();
-    }
-
     @Autowired
     CustomerService customerService;
 
